@@ -49,6 +49,9 @@ const ButtonDelete = styled.button`
     min-width: .9in;
     min-height:.35in;
     z-index:10;
+    &::before {
+    content:"Borrar";
+    }
     &:hover {
         transform: scale(1.1);
         transition: 150ms ease-in-out all;
@@ -60,7 +63,7 @@ export const AddedTask = ({taskName, clase}) => {
     return (
     <ContainerTask>
     <TitleTask>{taskName}</TitleTask>
-    <ButtonDelete type="button" className={clase}>Borrar</ButtonDelete>
+    <ButtonDelete type="button" className={clase}></ButtonDelete>
     </ContainerTask>
     )
 }
