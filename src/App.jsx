@@ -67,8 +67,7 @@ const NullTasks = styled.p`
   font-weight: 600;
   letter-spacing: 1px;
   align-self: center;
-  text-align:center;
-  
+  text-align: center;
 `;
 
 let savedTasks = localStorage.getItem("tasks");
@@ -124,16 +123,16 @@ function App() {
     const eliminarTodasTarea = (e) => {
       e.preventDefault();
       if (tasks.length == 0) {
-        alert("No tenes tareas pibe")
+        alert("No tenes tareas pibe");
         return;
       }
-      delAll.classList.add("success")
-      delAll.innerText="Listo"
+      delAll.classList.add("success");
+      delAll.innerText = "Listo";
       setTimeout(() => {
         localStorage.removeItem("tasks");
         setTasks([]);
-        delAll.classList.remove("success")
-        delAll.innerText="Borrar Todo"
+        delAll.classList.remove("success");
+        delAll.innerText = "Borrar Todo";
       }, 600);
     };
     delAll.addEventListener("click", eliminarTodasTarea);
@@ -176,7 +175,7 @@ function App() {
           />
         </FormStyled>
         <ContainerList className="container-list">
-            {tasks.length === 0 && <NullTasks>No Hay Tareas</NullTasks>}
+          {tasks.length === 0 && <NullTasks>No Hay Tareas</NullTasks>}
           <TransitionGroup>
             {tasks.map((task, index) => (
               <CSSTransition key={index} timeout={300} classNames="fade">

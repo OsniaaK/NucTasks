@@ -38,21 +38,23 @@ const TitleTask = styled.p`
 `
 
 const ButtonDelete = styled.button`
-    font-family:var(--fontNormal);
-    width:75px;
-    padding:.25rem .75rem;
+    font-family: var(--fontNormal);
     font-size: 1rem;
     color: white;
     cursor: pointer;
     transition: 150ms ease-in-out all;
     background-color: #f84e50;
-    border-radius: 7px; 
+    border-radius: 5px;
     border: none;
+    min-width: .9in;
+    min-height:.35in;
+    z-index:10;
     &:hover {
-    transform: scale(1.1);
-    transition: 150ms ease-in-out all;
+        transform: scale(1.1);
+        transition: 150ms ease-in-out all;
     }
-`
+
+`;
 
 export const AddedTask = ({taskName, clase}) => {
     return (
