@@ -4,6 +4,8 @@ import { AddedTask } from "./components/AddedTask";
 import { RemoveAll } from "./components/RemoveAll";
 import { useEffect, useState } from "react";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
+import { TasksProvider } from "./context/TasksProvider";
+import { useTasks } from "./context/contextTask";
 
 const MainStyled = styled.main`
   display: flex;
@@ -73,22 +75,30 @@ const NullTasks = styled.p`
 let savedTasks = localStorage.getItem("tasks");
 
 function App() {
+  const { taskCount, setTaskCount } = useTasks();
+  const [errorMessage, setErrorMessage] = useState("");
   const [tasks, setTasks] = useState(() => {
     return savedTasks ? JSON.parse(savedTasks) : [];
   });
+
   useEffect(() => {
     const sendTaskButton = document.querySelector("#sendTask");
     const agregarTarea = (e) => {
       e.preventDefault();
       const taskInput = document.querySelector("#writtenTask");
       const targeted = taskInput.value.trim();
+      if (tasks.includes(targeted)) {
+        setErrorMessage("Ya tienes esa tarea.");
+        return;
+      }
       if (targeted) {
         const newTasks = [...tasks, targeted];
         setTasks(newTasks);
         localStorage.setItem("tasks", JSON.stringify(newTasks));
         taskInput.value = "";
+        setTaskCount(newTasks.length);
       } else {
-        alert("No podés agregar una tarea vacía.");
+        alert("Debes escribir una tarea.");
       }
     };
 
@@ -96,7 +106,18 @@ function App() {
     return () => {
       sendTaskButton.removeEventListener("click", agregarTarea);
     };
-  }, [tasks]);
+  }, [tasks, setTaskCount]);
+
+  useEffect(() => {
+    if (errorMessage) {
+      const timer = setTimeout(() => {
+        setErrorMessage("");
+      }, 1500);
+
+      return () => clearTimeout(timer);
+    }
+  }, [errorMessage]);
+
   useEffect(() => {
     const inputAdd = document.querySelector("#writtenTask");
     const agregarInput = (e) => {
@@ -162,31 +183,38 @@ function App() {
     };
   }, [tasks]);
 
+  useEffect(() => {
+    setTaskCount(tasks.length);
+  }, [tasks , setTaskCount]);
+
   return (
-    <>
-      <MainStyled>
-        <TitleTasks>NUCTASKS</TitleTasks>
-        <FormStyled>
-          <InputTask
-            IDinput="writtenTask"
-            IDbutton="sendTask"
-            placeholder="¿Qué tarea deseas agregar?"
-            textButton="Agregar"
-          />
-        </FormStyled>
-        <ContainerList className="container-list">
-          {tasks.length === 0 && <NullTasks>No Hay Tareas</NullTasks>}
-          <TransitionGroup>
-            {tasks.map((task, index) => (
-              <CSSTransition key={index} timeout={300} classNames="fade">
-                <AddedTask taskName={task} clase="button-for-delete" />
-              </CSSTransition>
-            ))}
-          </TransitionGroup>
-        </ContainerList>
-        <RemoveAll />
-      </MainStyled>
-    </>
+    <TasksProvider>
+      <>
+        <MainStyled>
+          <TitleTasks>NUCTASKS</TitleTasks>
+          <FormStyled>
+            <InputTask
+              IDinput="writtenTask"
+              IDbutton="sendTask"
+              placeholder="¿Qué tarea deseas agregar?"
+              textButton="Agregar"
+            />
+          </FormStyled>
+          <ContainerList className="container-list">
+            {errorMessage && <NullTasks>{errorMessage}</NullTasks>}
+            {taskCount === 0 && <NullTasks>¡No Hay Tareas!</NullTasks>}
+            <TransitionGroup>
+              {tasks.map((task, index) => (
+                <CSSTransition key={index} timeout={300} classNames="fade">
+                  <AddedTask taskName={task} clase="button-for-delete" />
+                </CSSTransition>
+              ))}
+            </TransitionGroup>
+          </ContainerList>
+          <RemoveAll />
+        </MainStyled>
+      </>
+    </TasksProvider>
   );
 }
 

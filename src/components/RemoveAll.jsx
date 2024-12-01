@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useTasks } from "../context/contextTask";
 
 const DeleteList = styled.button`
   display: flex;
@@ -34,9 +35,22 @@ const DeleteList = styled.button`
 `;
 
 export const RemoveAll = () => {
+  const { tasks, setTasks } = useTasks();
+
+  const handleRemoveAll = () => {
+    if (tasks.length === 0) {
+      alert("No tenes tareas pibe");
+      return;
+    }
+    setTasks([]);
+    localStorage.removeItem("tasks");
+  };
+
   return (
     <>
-      <DeleteList type="button" id="deleteAllButton">Borrar Todo</DeleteList>
+      <DeleteList type="button" id="deleteAllButton" onClick={handleRemoveAll}>
+        Borrar Todo
+      </DeleteList>
     </>
   );
 };
