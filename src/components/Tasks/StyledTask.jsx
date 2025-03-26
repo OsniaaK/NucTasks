@@ -48,9 +48,6 @@ export const ButtonDelete = styled.button`
   min-width: 0.9in;
   min-height: 0.35in;
   z-index: 10;
-  &::before {
-    content: "Borrar";
-  }
   &:hover {
     transform: scale(1.1);
     transition: 150ms ease-in-out all;
