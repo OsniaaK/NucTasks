@@ -19,6 +19,13 @@ export const InputTask = ({ IDinput, IDbutton, onTaskAdded }) => {
     }
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleClick();
+    }
+  };
+
   return (
     <>
       <InputTaskInput
@@ -27,6 +34,7 @@ export const InputTask = ({ IDinput, IDbutton, onTaskAdded }) => {
         placeholder="¿Qué tarea deseas agregar?"
         value={taskName}
         onChange={(e) => setTaskName(e.target.value)}
+        onKeyDown={handleKeyDown}
       />
       <InputTaskButton type="button" id={IDbutton} onClick={handleClick}>
         Agregar
