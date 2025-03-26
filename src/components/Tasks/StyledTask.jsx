@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const ContainerTask = styled.article`
+export const ContainerTask = styled.article`
   display: flex;
   flex-direction: row;
   width: 100%;
@@ -26,7 +26,7 @@ const ContainerTask = styled.article`
   }
 `;
 
-const TitleTask = styled.p`
+export const TitleTask = styled.p`
   color: var(--colorFontLight);
   font-family: var(--fontNormal);
   overflow-wrap: break-word;
@@ -36,7 +36,7 @@ const TitleTask = styled.p`
   cursor: default;
 `;
 
-const ButtonDelete = styled.button`
+export const ButtonDelete = styled.button`
   font-family: var(--fontNormal);
   font-size: 1rem;
   color: white;
@@ -57,17 +57,3 @@ const ButtonDelete = styled.button`
   }
 `;
 
-export const AddedTask = ({ taskName, clase }) => {
-  return (
-    <ContainerTask>
-      <TitleTask>{taskName}</TitleTask>
-      <ButtonDelete type="button" className={clase}></ButtonDelete>
-    </ContainerTask>
-  );
-};
-
-import PropTypes from "prop-types";
-AddedTask.propTypes = {
-  taskName: PropTypes.string.isRequired,
-  clase: PropTypes.string.isRequired,
-};

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const InputTaskInput = styled.input`
+export const InputTaskInput = styled.input`
   border: 1px solid #ccc;
   border-radius: 5px;
   padding:.5rem 0;
@@ -35,7 +35,7 @@ const InputTaskInput = styled.input`
   }
 `;
 
-const InputTaskButton = styled.button`
+export const InputTaskButton = styled.button`
   padding: .55rem 1.25rem;
   font-family:var(--fontNormal);
   border:1px solid var(--buttonPrimary);
@@ -59,21 +59,3 @@ const InputTaskButton = styled.button`
   width:95%;
   }
 `;
-
-export const InputTask = ({IDinput, placeholder, IDbutton ,textButton}) => {
-  return (
-    <>
-      <InputTaskInput type="text" id={IDinput} placeholder={placeholder}/>
-      <InputTaskButton type="button" id={IDbutton}>{textButton}</InputTaskButton>
-    </>
-  );
-};
-
-import PropTypes from 'prop-types';
-InputTask.propTypes = {
-    IDinput: PropTypes.string.isRequired,
-    placeholder: PropTypes.string,
-    textButton: PropTypes.string.isRequired,
-    IDbutton: PropTypes.string.isRequired,
-  };
-
